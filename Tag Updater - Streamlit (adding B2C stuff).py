@@ -11,17 +11,10 @@ mode = st.selectbox(
 
 def read_csv(file):
     try:
-        return pd.read_csv(
-            file,
-            encoding="utf-8",
-            on_bad_lines='skip'   # skips problematic rows
-        )
+        return pd.read_csv(file, encoding="utf-8-sig", on_bad_lines='skip')
     except UnicodeDecodeError:
-        return pd.read_csv(
-            file,
-            encoding="latin1",
-            on_bad_lines='skip'
-        )
+        file.seek(0)
+        return pd.read_csv(file, encoding="latin1", on_bad_lines='skip')
 
 # MODE 1: G2P Disbursements
 if mode == "G2P Disbursements":
